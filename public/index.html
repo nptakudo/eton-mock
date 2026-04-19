@@ -248,10 +248,10 @@
   .main-body { flex: 1; overflow-y: auto; }
 
   /* Report styles */
-  .report-page { padding: 28px 32px; overflow-y: auto; flex: 1; }
-  .report-header { margin-bottom: 16px; }
+  .report-page { padding: 36px 40px 56px; overflow-y: auto; flex: 1; }
+  .report-header { margin-bottom: 28px; }
   .report-version { float: right; font-size: 11px; color: #aaa; background: #eee; border-radius: 4px; padding: 2px 7px; margin-top: 4px; }
-  .report-h1 { font-size: 20px; font-weight: 800; color: #111; line-height: 1.2; text-transform: uppercase; letter-spacing: -0.01em; margin-bottom: 12px; }
+  .report-h1 { font-size: 20px; font-weight: 800; color: #111; line-height: 1.2; text-transform: uppercase; letter-spacing: -0.01em; margin-bottom: 16px; }
   .export-btn {
     display: inline-flex; align-items: center; gap: 5px;
     font-size: 12px; color: #555; background: none;
@@ -260,18 +260,19 @@
     transition: background 0.12s; margin-bottom: 14px;
   }
   .export-btn:hover { background: #f0ede8; }
-  .report-summary { font-size: 13px; color: #444; line-height: 1.6; margin-bottom: 12px; max-width: 560px; }
-  .report-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+  .report-summary { font-size: 13px; color: #444; line-height: 1.65; margin-bottom: 16px; max-width: 560px; }
+  .report-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
   .report-tag { background: #eae9e4; border-radius: 5px; padding: 3px 8px; font-size: 11.5px; color: #555; }
-  .report-model { font-size: 12px; color: #888; margin-bottom: 10px; }
-  .report-disclaimer { font-size: 12px; color: #aaa; font-style: italic; border-left: 2px solid #e0dcd6; padding-left: 10px; margin-bottom: 20px; }
+  .report-model { font-size: 12px; color: #888; margin-bottom: 12px; }
+  /* border-left stripe replaced with background tint — see absolute_bans */
+  .report-disclaimer { font-size: 12px; color: #999; font-style: italic; background: rgba(39,26,0,0.03); border-radius: 6px; padding: 10px 14px; margin-bottom: 28px; }
 
-  .report-section { background: #fff; border: 1px solid rgba(0,0,0,0.07); border-radius: 10px; margin-bottom: 12px; overflow: hidden; }
-  .report-section-header { padding: 18px 20px 0; }
+  .report-section { background: #fff; border: 1px solid rgba(0,0,0,0.07); border-radius: 10px; margin-bottom: 16px; overflow: hidden; }
+  .report-section-header { padding: 20px 22px 0; }
   .report-section-title { font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em; color: #111; margin-bottom: 10px; }
-  .report-section-body { font-size: 13px; color: #444; line-height: 1.6; margin-bottom: 10px; }
-  .report-bullets { padding: 0 20px; margin-bottom: 12px; list-style: none; }
-  .report-bullets li { font-size: 13px; color: #444; line-height: 1.55; padding: 2px 0; }
+  .report-section-body { font-size: 13px; color: #444; line-height: 1.65; margin-bottom: 12px; max-width: 640px; }
+  .report-bullets { padding: 0 22px; margin-bottom: 14px; list-style: none; }
+  .report-bullets li { font-size: 13px; color: #444; line-height: 1.6; padding: 5px 0; }
   .report-bullets li::before { content: "* "; color: #aaa; }
   .evidence-ref {
     display: inline-flex;
@@ -323,7 +324,7 @@
 
   .accordion-toggle {
     display: flex; align-items: center; gap: 5px;
-    padding: 10px 20px;
+    padding: 11px 22px;
     font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
     text-transform: uppercase; color: #888;
     cursor: pointer; user-select: none;
@@ -340,19 +341,19 @@
   .evidence-card-quote { font-size: 13px; color: #222; font-style: italic; line-height: 1.5; margin-bottom: 6px; }
   .evidence-card-reason { font-size: 12px; color: #999; line-height: 1.5; }
 
-  .next-steps-section { margin-top: 16px; margin-bottom: 20px; }
-  .next-steps-title { font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em; color: #111; margin-bottom: 12px; }
+  .next-steps-section { margin-top: 36px; margin-bottom: 24px; }
+  .next-steps-title { font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em; color: #111; margin-bottom: 16px; }
   .next-steps-list { list-style: none; counter-reset: steps; }
-  .next-steps-list li { counter-increment: steps; display: flex; gap: 12px; align-items: flex-start; font-size: 13px; color: #444; line-height: 1.55; margin-bottom: 10px; }
-  .next-steps-list li::before { content: counter(steps); font-size: 12px; font-weight: 600; color: #aaa; min-width: 18px; margin-top: 1px; }
+  .next-steps-list li { counter-increment: steps; display: flex; gap: 14px; align-items: flex-start; font-size: 13px; color: #444; line-height: 1.6; margin-bottom: 12px; max-width: 640px; }
+  .next-steps-list li::before { content: counter(steps); font-size: 12px; font-weight: 600; color: #bbb; min-width: 20px; margin-top: 2px; }
 
   .report-feedback-card {
-    margin-top: 22px;
-    margin-bottom: 28px;
+    margin-top: 40px;
+    margin-bottom: 40px;
     background: #faf9f6;
     border: 1px solid rgba(0,0,0,0.05);
     border-radius: 10px;
-    padding: 16px 18px;
+    padding: 20px 22px;
   }
   .report-feedback-title { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em; color: #111; margin-bottom: 8px; }
   .report-feedback-copy { font-size: 12.5px; color: #777; line-height: 1.55; margin-bottom: 12px; max-width: 560px; }
@@ -899,6 +900,46 @@
   }
   .tooltip-wrap:hover .tooltip { opacity: 1; }
 
+  /* ── Home page layout classes ── */
+  .home-greeting { margin-bottom: 36px; }
+  .home-greeting-title { font-size: 22px; font-weight: 700; color: #111; letter-spacing: -0.02em; margin-bottom: 4px; }
+  .home-greeting-date { font-size: 13px; color: #bbb; }
+
+  .home-actions { display: flex; gap: 10px; margin-bottom: 36px; }
+
+  /* Two label tiers so Recent reads heavier than Frameworks */
+  .home-section-label {
+    font-size: 11px; font-weight: 700; color: #c0bdb8;
+    text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 14px;
+  }
+  .home-section-label.primary { font-size: 12px; color: #aaa; letter-spacing: 0.05em; }
+
+  .home-recent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+  .home-recent-card {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 10px;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: box-shadow 0.15s;
+  }
+  .home-recent-card:hover { box-shadow: 0 2px 14px rgba(0,0,0,0.08); }
+  .home-recent-card-icon {
+    width: 30px; height: 30px;
+    background: #eae9e5; border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 12px; color: #999;
+  }
+  .home-recent-card-title { font-size: 13px; font-weight: 500; color: #1a1a1a; margin-bottom: 4px; line-height: 1.4; }
+  .home-recent-card-meta { font-size: 11.5px; color: #bbb; }
+
+  .home-frameworks { display: flex; gap: 8px; flex-wrap: wrap; }
+
   /* ── Sidebar backdrop — hidden on desktop, shown on mobile/tablet ── */
   .sidebar-backdrop {
     display: none;
@@ -944,11 +985,13 @@
     .topbar-btn { padding: 4px 8px; font-size: 11.5px; gap: 3px; }
 
     /* Report */
-    .report-page { padding: 16px 16px 32px; }
+    .report-page { padding: 20px 18px 40px; }
     .report-h1 { font-size: 17px; }
     .report-version { float: none; display: inline-block; margin-bottom: 6px; }
     .report-summary { max-width: 100%; font-size: 12.5px; }
-    .next-steps-section { margin-top: 12px; }
+    .report-section-body { max-width: 100%; }
+    .next-steps-section { margin-top: 24px; }
+    .next-steps-list li { max-width: 100%; }
     .ref-hover-card { width: 240px; }
 
     /* Evidence */
@@ -1999,12 +2042,12 @@ function HomeTab({ onNewJob, recentJobs, historyGroups, onSelectJob }) {
 
   return (
     <div className="main-body home-body" style={{padding:'36px 40px'}}>
-      <div style={{marginBottom:32}}>
-        <div style={{fontSize:22, fontWeight:700, color:'#111', letterSpacing:'-0.02em', marginBottom:4}}>Good morning, Tom</div>
-        <div style={{fontSize:13, color:'#aaa'}}>{dateStr}</div>
+      <div className="home-greeting">
+        <div className="home-greeting-title">Good morning, Tom</div>
+        <div className="home-greeting-date">{dateStr}</div>
       </div>
 
-      <div style={{display:'flex', gap:12, marginBottom:28}}>
+      <div className="home-actions">
         <button className="topbar-btn topbar-btn-primary" onClick={onNewJob} style={{fontSize:13, padding:'8px 16px', display:'flex', alignItems:'center', gap:6}}>
           <IconPlus /> New Job
         </button>
@@ -2015,24 +2058,19 @@ function HomeTab({ onNewJob, recentJobs, historyGroups, onSelectJob }) {
 
       <ChatBox />
 
-      <div style={{fontSize:12, fontWeight:600, color:'#999', textTransform:'uppercase', letterSpacing:'0.04em', marginBottom:12}}>Recent</div>
-      <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(200px, 1fr))', gap:10, marginBottom:36}}>
+      <div className="home-section-label primary">Recent</div>
+      <div className="home-recent-grid">
         {recentJobs.slice(0,4).map(job => (
-          <div key={job.id} onClick={() => onSelectJob(job.id)}
-            style={{background:'#fff', border:'1px solid rgba(0,0,0,0.07)', borderRadius:10, padding:'14px 16px', cursor:'pointer', transition:'box-shadow 0.15s'}}
-            onMouseEnter={e => e.currentTarget.style.boxShadow='0 2px 12px rgba(0,0,0,0.07)'}
-            onMouseLeave={e => e.currentTarget.style.boxShadow='none'}>
-            <div style={{width:32, height:32, background:'#eae9e5', borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center', marginBottom:10, color:'#888'}}>
-              <IconDoc />
-            </div>
-            <div style={{fontSize:13, fontWeight:500, color:'#1a1a1a', marginBottom:3, lineHeight:1.4}}>{job.label}</div>
-            <div style={{fontSize:11.5, color:'#aaa'}}>{job.meta} ago</div>
+          <div key={job.id} className="home-recent-card" onClick={() => onSelectJob(job.id)}>
+            <div className="home-recent-card-icon"><IconDoc /></div>
+            <div className="home-recent-card-title">{job.label}</div>
+            <div className="home-recent-card-meta">{job.meta} ago</div>
           </div>
         ))}
       </div>
 
-      <div style={{fontSize:12, fontWeight:600, color:'#999', textTransform:'uppercase', letterSpacing:'0.04em', marginBottom:12}}>Frameworks</div>
-      <div style={{display:'flex', gap:8, flexWrap:'wrap'}}>
+      <div className="home-section-label">Frameworks</div>
+      <div className="home-frameworks">
         {frameworks.map(fw => (
           <div key={fw.id} style={{display:'flex', alignItems:'center', gap:7, background:fw.color, borderRadius:8, padding:'8px 12px', cursor:'pointer', fontSize:13, color:'#333', fontWeight:500}}>
             <span style={{fontSize:15}}>{fw.icon}</span> {fw.label}
