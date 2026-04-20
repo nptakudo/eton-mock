@@ -1850,7 +1850,6 @@ function PromptModal({ prompt, onClose }) {
 
 function UploadModal({ onClose, onSubmit }) {
   const [files, setFiles] = useState([]);
-  const [selectedFw, setSelectedFw] = useState(null);
   const [drag, setDrag] = useState(false);
   const inputRef = useRef();
 
@@ -1906,25 +1905,9 @@ function UploadModal({ onClose, onSubmit }) {
           </div>
         )}
 
-        <div style={{fontSize:12, fontWeight:600, color:'#888', textTransform:'uppercase', letterSpacing:'0.04em', marginBottom:8}}>Framework</div>
-        <div className="fw-selector">
-          {frameworks.map(fw => (
-            <div key={fw.id} className={`fw-card${selectedFw === fw.id ? ' selected' : ''}`} onClick={() => setSelectedFw(fw.id)}>
-              <span style={{fontSize:16}}>{fw.icon}</span>
-              <span className="fw-card-label">{fw.label}</span>
-              {selectedFw === fw.id && <span style={{marginLeft:'auto',color:'#1a1a1a'}}><IconCheck /></span>}
-            </div>
-          ))}
-          <div className={`fw-card${selectedFw === 'none' ? ' selected' : ''}`} onClick={() => setSelectedFw('none')}>
-            <span style={{fontSize:16}}>📁</span>
-            <span className="fw-card-label">No framework</span>
-            {selectedFw === 'none' && <span style={{marginLeft:'auto',color:'#1a1a1a'}}><IconCheck /></span>}
-          </div>
-        </div>
-
         <div className="upload-modal-actions">
           <button className="modal-btn" onClick={onClose}>Cancel</button>
-          <button className="modal-btn modal-btn-primary" disabled={files.length === 0 || !selectedFw} onClick={() => { onSubmit(files, selectedFw); onClose(); }}>
+          <button className="modal-btn modal-btn-primary" disabled={files.length === 0} onClick={() => { onSubmit(files, 'none'); onClose(); }}>
             Start Analysis
           </button>
         </div>
@@ -2562,15 +2545,6 @@ function HomeTab({ onNewJob, recentJobs, historyGroups, onSelectJob }) {
         <div className="home-greeting-date">{dateStr}</div>
       </div>
 
-      <div className="home-actions">
-        <button className="topbar-btn topbar-btn-primary" onClick={onNewJob} style={{fontSize:13, padding:'8px 16px', display:'flex', alignItems:'center', gap:6}}>
-          <IconPlus /> New Job
-        </button>
-        <button className="topbar-btn" style={{fontSize:13, padding:'8px 16px', display:'flex', alignItems:'center', gap:6}}>
-          <IconUpload /> Import Recording
-        </button>
-      </div>
-
       <ChatBox />
 
       <div className="home-section-label primary">Recent</div>
@@ -2591,9 +2565,6 @@ function HomeTab({ onNewJob, recentJobs, historyGroups, onSelectJob }) {
             <span style={{fontSize:15}}>{fw.icon}</span> {fw.label}
           </div>
         ))}
-        <div style={{display:'flex', alignItems:'center', gap:7, background:'#f0ede8', borderRadius:8, padding:'8px 12px', cursor:'pointer', fontSize:13, color:'#888', border:'1.5px dashed #d8d6d0'}}>
-          <IconPlus /> Add framework
-        </div>
       </div>
     </div>
   );
@@ -2807,13 +2778,11 @@ function App() {
             </div>
           </div>
 
-          <div className="divider" />
-
           {/* Recent Jobs */}
           <div className="nav-section">
             <div className={`nav-item ${recentJobsActive ? 'active' : ''}`} onClick={() => toggleSection('jobs')}>
               <span className="nav-icon"><IconVideo /></span>
-              <span className="nav-label">Recent Jobs</span>
+              <span className="nav-label">Recent Reports</span>
               <span className={`section-chevron ${collapsed.jobs ? 'closed' : ''}`}>
                 <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="2 4 6 8 10 4"/></svg>
               </span>
@@ -2831,13 +2800,7 @@ function App() {
                 ))}
               </div>
             )}
-            <div className="add-item" onClick={() => setShowUpload(true)}>
-              <span className="nav-icon" style={{color:'#aaa'}}><IconPlus /></span>
-              <span>New job</span>
-            </div>
           </div>
-
-          <div className="divider" />
 
           {/* Frameworks */}
           <div className="nav-section uploads-section">
@@ -2912,7 +2875,7 @@ function App() {
               <span style={{fontSize:13, fontWeight:500, color:'#1a1a1a', padding:'0 4px'}}>Home</span>
             ) : activeNav === 'job' ? (
               <div className="topbar-breadcrumb">
-                <span style={{color:'#aaa', cursor:'pointer'}} onClick={() => setActiveNav('home')}>Jobs</span>
+                <span style={{color:'#aaa', cursor:'pointer'}} onClick={() => setActiveNav('home')}>Report</span>
                 <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="#ccc" strokeWidth="1.8" strokeLinecap="round"><polyline points="4 2 8 6 4 10"/></svg>
                 <span>{currentJobLabel}</span>
               </div>
@@ -2961,11 +2924,6 @@ function App() {
                   <IconPanelRight /> Configure
                 </button>
               </>
-            )}
-            {activeNav === 'home' && (
-              <button className="topbar-btn topbar-btn-primary" onClick={() => setShowUpload(true)}>
-                <IconPlus /> New Job
-              </button>
             )}
             {activeNav.startsWith('space-video-') && (
               <>
