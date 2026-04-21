@@ -33,6 +33,11 @@ https://developers.cloudflare.com/workers/runtime-apis/nodejs/
 Retrieve API references and limits from:
 `/kv/` · `/r2/` · `/d1/` · `/durable-objects/` · `/queues/` · `/vectorize/` · `/workers-ai/` · `/agents/`
 
+## Feature Flags
+
+- **Prompts gallery** — temporarily hidden. The sidebar tab, topbar breadcrumb, and content panel are all commented out in `public/index.html`. Data and styles are intact; re-enable by restoring those branches.
+- **Home → Frameworks section** — temporarily hidden. The label and framework chips in `HomeTab` are commented out in `public/index.html`. The `frameworks` data array is intact; re-enable by restoring the commented block.
+
 ## Best Practices (conditional)
 
 If the application uses Durable Objects or Workflows, refer to the relevant best practices:

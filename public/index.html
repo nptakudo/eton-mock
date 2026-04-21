@@ -1975,6 +1975,11 @@ function ReportTab() {
   const [openFramework, setOpenFramework] = useState({});
   const [feedbackText, setFeedbackText] = useState('');
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
+  const createdAt = React.useMemo(() => {
+    const d = new Date();
+    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) +
+      ' · ' + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  }, []);
 
   const handleFeedbackSubmit = () => {
     if (!feedbackText.trim()) return;
@@ -1984,7 +1989,7 @@ function ReportTab() {
   return (
     <div className="report-page">
       <div className="report-header">
-        <span className="report-version">v1.0</span>
+        <span className="report-version">{createdAt}</span>
         <div className="report-h1">AVPT Observation Report —<br/>Music and Movement Lesson</div>
 
         <div className="report-summary">This short lesson shows a warm, energetic music-and-movement experience focused on contrasting slow and fast, linking music to animal movement, and transitioning children into a whole-group circle activity.</div>
@@ -2558,14 +2563,7 @@ function HomeTab({ onNewJob, recentJobs, historyGroups, onSelectJob }) {
         ))}
       </div>
 
-      <div className="home-section-label">Frameworks</div>
-      <div className="home-frameworks">
-        {frameworks.map(fw => (
-          <div key={fw.id} style={{display:'flex', alignItems:'center', gap:7, background:fw.color, borderRadius:8, padding:'8px 12px', cursor:'pointer', fontSize:13, color:fw.textColor||'#333', fontWeight:500}}>
-            <span style={{fontSize:15}}>{fw.icon}</span> {fw.label}
-          </div>
-        ))}
-      </div>
+      {/* Frameworks section temporarily hidden */}
     </div>
   );
 }
@@ -2737,7 +2735,7 @@ function App() {
 
   const currentJobLabel = recentJobs.find(j => j.id === activeJob)?.label || 'Job';
   const recentJobsActive = activeNav === 'job';
-  const uploadsNavActive = activeNav === 'artifacts-uploads' || activeNav === 'upload-recording' || activeNav.startsWith('space-video-') || activeNav === 'artifacts-prompts';
+  const uploadsNavActive = activeNav === 'artifacts-uploads' || activeNav === 'upload-recording' || activeNav.startsWith('space-video-');
   const getSourceVideo = (item) => {
     if (!processedVideos.length) return null;
     const idx = Math.abs(Number(item.id) || 0) % processedVideos.length;
@@ -2818,10 +2816,7 @@ function App() {
                     onClick={() => setActiveNav('artifacts-uploads')}>
                     My Uploads
                   </div>
-                  <div className={`artifact-subtab ${activeNav === 'artifacts-prompts' ? 'active' : ''}`}
-                    onClick={() => setActiveNav('artifacts-prompts')}>
-                    Prompts
-                  </div>
+                  {/* Prompts gallery temporarily hidden */}
                 </div>
               )}
             </>
@@ -2885,8 +2880,6 @@ function App() {
               <span style={{fontSize:13, fontWeight:500, color:'#1a1a1a', padding:'0 4px'}}>Shared with me</span>
             ) : activeNav === 'upload-recording' || activeNav === 'artifacts-uploads' ? (
               <span style={{fontSize:13, fontWeight:500, color:'#1a1a1a', padding:'0 4px'}}>My Uploads</span>
-            ) : activeNav === 'artifacts-prompts' ? (
-              <span style={{fontSize:13, fontWeight:500, color:'#1a1a1a', padding:'0 4px'}}>Prompts</span>
             ) : activeNav.startsWith('space-video-') ? (() => {
               const vid = processedVideos.find(v => 'space-video-'+v.id === activeNav);
               return (
@@ -3051,29 +3044,6 @@ function App() {
                   </div>
                 </div>
               ))}
-            </div>
-          ) : activeNav === 'artifacts-prompts' ? (
-            <div className="prompts-page">
-              <div className="prompts-page-header">
-                <div className="prompts-page-title">Prompts</div>
-                <button className="topbar-btn">
-                  <IconPlus /> New Prompt
-                </button>
-              </div>
-              <div className="prompts-grid">
-                {promptsData.map((p, i) => (
-                  <div key={i} className="prompt-card" onClick={() => setSelectedPrompt(p)}>
-                    <div className="prompt-card-title">{p.title}</div>
-                    <div className="prompt-card-desc">{p.desc}</div>
-                    <div className="prompt-card-footer">
-                      <div className="prompt-card-source">
-                        <IconUser />
-                        Admin
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
           ) : activeNav.startsWith('space-video-') ? (() => {
             const vid = processedVideos.find(v => 'space-video-'+v.id === activeNav);
