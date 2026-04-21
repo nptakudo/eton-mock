@@ -37,6 +37,7 @@ Retrieve API references and limits from:
 
 - **Prompts gallery** — temporarily hidden. The sidebar tab, topbar breadcrumb, and content panel are all commented out in `public/index.html`. Data and styles are intact; re-enable by restoring those branches.
 - **Home → Frameworks section** — temporarily hidden. The label and framework chips in `HomeTab` are commented out in `public/index.html`. The `frameworks` data array is intact; re-enable by restoring the commented block.
+- **ChatBox footer — attach picker & model picker** — temporarily hidden. Both `chat-model-wrap` blocks (attach files + Sonnet/GPT model selector) are commented out in the `chat-box-footer` in `public/index.html`. State, refs, and handlers are intact; re-enable by restoring those blocks.
 
 ## Best Practices (conditional)
 

@@ -1998,7 +1998,7 @@ function ReportTab() {
           <span className="report-tag">🌿 EYLF v2.0</span>
           <span className="report-tag">🎬 EtonHouse Literacy Observation</span>
         </div>
-        <div className="report-model">Model: gpt-4.5-turbo</div>
+
         <div className="report-disclaimer">Mock demo report generated from local frontend data.</div>
       </div>
 
@@ -2402,62 +2402,8 @@ function ChatBox() {
         rows={3}
       />
       <div className="chat-box-footer">
-        {/* Attach dropdown — mirrors the model picker */}
-        <div className="chat-model-wrap" ref={attachWrapRef}>
-          <button
-            type="button"
-            className="chat-footer-btn"
-            onClick={() => setAttachOpen(o => !o)}
-            aria-expanded={attachOpen}
-            aria-haspopup="listbox">
-            <IconAttach />
-            <span style={{display:'inline-flex', transition:'transform 0.2s', transform: attachOpen ? 'rotate(180deg)' : 'none', marginLeft:2}}><IconChevronDown /></span>
-          </button>
-          {attachOpen && (
-            <div className="chat-model-menu" role="listbox" style={{minWidth:220}}>
-              <div className="chat-model-section">Add</div>
-              <div
-                className="chat-model-item"
-                role="option"
-                onClick={() => photosInputRef.current?.click()}>
-                <span className="chat-model-icon">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/>
-                    <path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/>
-                  </svg>
-                </span>
-                Photos &amp; files
-              </div>
-            </div>
-          )}
-        </div>
-        <div className="chat-model-wrap" ref={modelWrapRef}>
-          <button
-            type="button"
-            className="chat-footer-btn"
-            onClick={() => setModelOpen(o => !o)}
-            aria-expanded={modelOpen}
-            aria-haspopup="listbox">
-            {modelLabel}{' '}
-            <span style={{display:'inline-flex', transition:'transform 0.2s', transform: modelOpen ? 'rotate(180deg)' : 'none'}}><IconChevronDown /></span>
-          </button>
-          {modelOpen && (
-            <div className="chat-model-menu" role="listbox">
-              {chatModelOptions.map(m => (
-                <div
-                  key={m.id}
-                  className="chat-model-item"
-                  role="option"
-                  aria-selected={modelId === m.id}
-                  onClick={() => pickModel(m.id)}>
-                  <span className="chat-model-icon"><m.Icon /></span>
-                  {m.label}
-                  {modelId === m.id && <span className="chat-model-check"><IconCheck /></span>}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        {/* Attach picker — temporarily hidden */}
+        {/* Model picker (Sonnet 4.6 etc.) — temporarily hidden */}
         <button
           className={`chat-send-btn${!value.trim() ? ' empty' : ''}`}
           onClick={() => value.trim() && setValue('')}
@@ -2914,7 +2860,7 @@ function App() {
                   onClick={() => setRightPanelOpen(o => !o)}
                   title="Configure job"
                   style={rightPanelOpen ? {background:'var(--rp-red)', borderColor:'var(--rp-red)'} : undefined}>
-                  <IconPanelRight /> Configure
+                  <IconPanelRight /> Regenerate
                 </button>
               </>
             )}
