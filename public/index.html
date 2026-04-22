@@ -352,6 +352,96 @@
   .next-steps-list li { counter-increment: steps; display: flex; gap: 14px; align-items: flex-start; font-size: 13px; color: #444; line-height: 1.6; margin-bottom: 12px; max-width: 640px; }
   .next-steps-list li::before { content: counter(steps); font-size: 12px; font-weight: 600; color: oklch(62% 0.09 70); min-width: 20px; margin-top: 2px; }
 
+  /* Reflection card */
+  .reflection-card {
+    margin-top: 22px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    border: 1.5px dashed #d8d6d0;
+    background: #fff;
+    overflow: hidden;
+    transition: border-color 0.15s, border-style 0.15s;
+  }
+  .reflection-card.expanded,
+  .reflection-card.saved {
+    border-style: solid;
+    border-color: rgba(0,0,0,0.08);
+  }
+  .reflection-card.saved { background: #f8f7f4; }
+  .reflection-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .reflection-card.saved .reflection-header { cursor: default; }
+  .reflection-icon-wrap {
+    width: 36px; height: 36px; border-radius: 9px;
+    background: #fde8d8;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: background 0.15s;
+  }
+  .reflection-card.saved .reflection-icon-wrap { background: #e8e8e4; }
+  .reflection-header-text { flex: 1; min-width: 0; }
+  .reflection-title { font-size: 13.5px; font-weight: 700; color: #1a1a1a; line-height: 1.3; }
+  .reflection-subtitle { font-size: 12px; color: #999; margin-top: 2px; line-height: 1.4; }
+  .reflection-chevron {
+    color: #aaa; flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  .reflection-card.expanded .reflection-chevron { transform: rotate(180deg); }
+  .reflection-body { padding: 0 16px 16px; }
+  .reflection-textarea {
+    width: 100%; box-sizing: border-box;
+    min-height: 130px; resize: vertical;
+    border: 1px solid #d8d6d0; border-radius: 9px;
+    background: #fff; color: #1a1a1a;
+    font: inherit; font-size: 13px; line-height: 1.6;
+    padding: 12px 14px;
+    transition: border-color 0.12s, box-shadow 0.12s;
+  }
+  .reflection-textarea:focus {
+    outline: none;
+    border-color: #a8a39a;
+    box-shadow: 0 0 0 3px rgba(168,163,154,0.14);
+  }
+  .reflection-footer {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    margin-top: 10px; gap: 10px;
+  }
+  .reflection-wordcount { font-size: 11.5px; color: #bbb; }
+  .reflection-actions { display: flex; gap: 8px; }
+  .reflection-cancel-btn {
+    height: 34px; padding: 0 14px;
+    border: 1px solid #d8d6d0; border-radius: 8px;
+    background: #fff; color: #666;
+    font: inherit; font-size: 12.5px;
+    cursor: pointer; transition: background 0.12s;
+  }
+  .reflection-cancel-btn:hover { background: #f5f4f0; }
+  .reflection-save-btn {
+    height: 34px; padding: 0 16px;
+    border: none; border-radius: 8px;
+    background: #1a1a1a; color: #fff;
+    font: inherit; font-size: 12.5px; font-weight: 600;
+    cursor: pointer; transition: background 0.12s, opacity 0.12s;
+  }
+  .reflection-save-btn:disabled { background: #ccc; cursor: not-allowed; }
+  .reflection-save-btn:not(:disabled):hover { background: #333; }
+  .reflection-saved-body { padding: 0 16px 14px; }
+  .reflection-saved-text { font-size: 13px; color: #333; line-height: 1.6; margin-bottom: 10px; }
+  .reflection-edit-btn {
+    height: 30px; padding: 0 14px;
+    border: 1px solid #d8d6d0; border-radius: 7px;
+    background: #fff; color: #555;
+    font: inherit; font-size: 12px;
+    cursor: pointer; transition: background 0.12s;
+  }
+  .reflection-edit-btn:hover { background: #f0ede8; }
+
   .report-feedback-card {
     margin-top: 40px;
     margin-bottom: 40px;
@@ -1975,6 +2065,15 @@ function ReportTab() {
   const [openFramework, setOpenFramework] = useState({});
   const [feedbackText, setFeedbackText] = useState('');
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
+  const [reflectionOpen, setReflectionOpen] = useState(false);
+  const [reflectionText, setReflectionText] = useState('');
+  const [reflectionDraft, setReflectionDraft] = useState('');
+  const [reflectionSaved, setReflectionSaved] = useState(false);
+  const reflectionWordCount = reflectionDraft.trim() ? reflectionDraft.trim().split(/\s+/).length : 0;
+  const savedWordCount = reflectionText.trim() ? reflectionText.trim().split(/\s+/).length : 0;
+  const openReflection = () => { setReflectionDraft(reflectionText); setReflectionOpen(true); };
+  const cancelReflection = () => { setReflectionOpen(false); setReflectionDraft(''); };
+  const saveReflection = () => { setReflectionText(reflectionDraft); setReflectionSaved(true); setReflectionOpen(false); };
   const createdAt = React.useMemo(() => {
     const d = new Date();
     return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) +
@@ -2076,6 +2175,74 @@ function ReportTab() {
           <li>Use a child-led recap at the end of the lesson to reinforce fast/slow vocabulary.</li>
           <li>Introduce a visual cue (e.g. speed dial) to scaffold the concept without relying solely on verbal instruction.</li>
         </ol>
+      </div>
+
+      {/* Reflection card */}
+      <div className={`reflection-card${reflectionSaved && !reflectionOpen ? ' saved' : reflectionOpen ? ' expanded' : ''}`}>
+        {reflectionSaved && !reflectionOpen ? (
+          <>
+            <div className="reflection-header">
+              <div className="reflection-icon-wrap">
+                <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="#888" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="2" width="14" height="16" rx="2"/>
+                  <line x1="7" y1="7" x2="13" y2="7"/>
+                  <line x1="7" y1="10.5" x2="13" y2="10.5"/>
+                  <line x1="7" y1="14" x2="10" y2="14"/>
+                </svg>
+              </div>
+              <div className="reflection-header-text">
+                <div className="reflection-title">Your Reflection</div>
+                <div className="reflection-subtitle">{savedWordCount} {savedWordCount === 1 ? 'word' : 'words'}</div>
+              </div>
+            </div>
+            <div className="reflection-saved-body">
+              <div className="reflection-saved-text">{reflectionText}</div>
+              <button className="reflection-edit-btn" onClick={openReflection}>Edit</button>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="reflection-header" onClick={() => reflectionOpen ? cancelReflection() : openReflection()}>
+              <div className="reflection-icon-wrap">
+                <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="#d4845a" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="2" width="14" height="16" rx="2"/>
+                  <line x1="7" y1="7" x2="13" y2="7"/>
+                  <line x1="7" y1="10.5" x2="13" y2="10.5"/>
+                  <line x1="7" y1="14" x2="10" y2="14"/>
+                </svg>
+              </div>
+              <div className="reflection-header-text">
+                <div className="reflection-title">Write Your Reflection</div>
+                <div className="reflection-subtitle">How did this lesson feel from your perspective?</div>
+              </div>
+              <svg className="reflection-chevron" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="4 6 8 10 12 6"/>
+              </svg>
+            </div>
+            {reflectionOpen && (
+              <div className="reflection-body">
+                <textarea
+                  className="reflection-textarea"
+                  value={reflectionDraft}
+                  onChange={e => setReflectionDraft(e.target.value)}
+                  placeholder="What went well? What would you do differently? What surprised you about this lesson?"
+                  autoFocus
+                />
+                <div className="reflection-footer">
+                  <span className="reflection-wordcount">
+                    {reflectionWordCount > 0 ? `${reflectionWordCount} ${reflectionWordCount === 1 ? 'word' : 'words'}` : ''}
+                  </span>
+                  <div className="reflection-actions">
+                    <button className="reflection-cancel-btn" onClick={cancelReflection}>Cancel</button>
+                    <button className="reflection-save-btn" disabled={!reflectionDraft.trim()} onClick={saveReflection}>
+                      Save reflection
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </>
+        )}
       </div>
 
       <div className="report-feedback-card">
